@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './product/product.module';
+import { ProductEntity } from './product/entities/product.entity';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { ProductModule } from './product/product.module';
       username: 'postgres',
       password: 'admin',
       database: 'e_comerce_nestjs_back',
-      entities: [],
+      entities: [ProductEntity],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
     }),
