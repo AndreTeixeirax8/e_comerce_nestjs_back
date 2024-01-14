@@ -28,4 +28,13 @@ export class ProductEntity {
 
   @Column('text') //tradução = transportes
   shippings: string;
+
+  @Column('text')
+  sex: string;
+
+  @Column('text')
+  brands: string;
+
+  @Column('text')
+  category: string;
 }
