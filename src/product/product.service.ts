@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -29,7 +29,15 @@ export class ProductService {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const findProduct = await this.productRepository.findOneBy({ id });
+
+    if (!findProduct) {
+      throw new HttpException('Produto não localizado', HttpStatus.NOT_FOUND);
+    }
+
+    await this.productRepository.remove(findProduct);
+
+    return 'Produto excluido';
   }
 }
