@@ -3,7 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
-import { Repository } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
 
 @Injectable()
 export class ProductService {
@@ -83,5 +83,29 @@ export class ProductService {
     await this.productRepository.remove(findProduct);
 
     return 'Produto excluido';
+  }
+
+  /*
+  async findProductsBycategory(name: string) {
+    const findProduct = await getRepository(ProductEntity)
+      .createQueryBuilder('product')
+      .where('product.subcategory = :name', { name })
+      .getMany();
+
+    console.log('name', name);
+    console.log('findProduct', findProduct);
+
+    return findProduct;
+  }*/
+  async findProductsByCategory(name: string) {
+    const findProduct = await this.productRepository
+      .createQueryBuilder('product')
+      .where('product.subcategory = :name', { name })
+      .getMany();
+
+    console.log('name', name);
+    console.log('findProduct', findProduct);
+
+    return findProduct;
   }
 }
