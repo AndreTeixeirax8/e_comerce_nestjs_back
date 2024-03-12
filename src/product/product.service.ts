@@ -82,7 +82,7 @@ export class ProductService {
 
     await this.productRepository.remove(findProduct);
 
-    return 'Produto excluido';
+    return 'DELETED';
   }
 
   /*
