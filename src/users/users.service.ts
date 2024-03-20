@@ -1,19 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from './entities/user.entity';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+    @InjectEntityManager() private postManager: EntityManager
+  ){}
+
+  async create(createUserDto: CreateUserDto) {
+    const newUser = await this.userRepository.create({
+      ...createUserDto
+    })
+
+    await this.userRepository.save(newUser)
+
+    return newUser
+
   }
 
   findAll() {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(testName:string) {
+    const userWithEntityManager = await this.postManager
+    .createQueryBuilder(UserEntity,'user')
+    .where("user.username= :name", {name:testName})
+    .getOne()
+
+    if(!userWithEntityManager){
+      throw new HttpException('invalido',HttpStatus.NOT_FOUND)
+    }
+    return userWithEntityManager
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
