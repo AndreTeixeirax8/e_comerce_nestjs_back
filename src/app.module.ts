@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './product/product.module';
 import { ProductEntity } from './product/entities/product.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { UserEntity } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -14,11 +17,13 @@ import { ProductEntity } from './product/entities/product.entity';
       username: 'postgres',
       password: 'admin',
       database: 'e_comerce_nestjs_back',
-      entities: [ProductEntity],
+      entities: [ProductEntity,UserEntity],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
     }),
     ProductModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
