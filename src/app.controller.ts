@@ -11,6 +11,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  //PAREI EM 14 MINUTOS DE AULA
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
   async login(@Request() req){
