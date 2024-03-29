@@ -12,6 +12,8 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
+import { Roles } from 'src/auth/roles.decorator';
+import { RolesEnum } from 'src/auth/role.enum';
 
 @Controller('product')
 export class ProductController {
@@ -24,6 +26,7 @@ export class ProductController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Roles(RolesEnum.Admin)
   @Get()
   findAll() {
     return this.productService.findAll();
