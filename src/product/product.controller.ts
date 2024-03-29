@@ -23,6 +23,7 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.productService.findAll();
