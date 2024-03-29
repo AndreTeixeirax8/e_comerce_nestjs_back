@@ -41,7 +41,16 @@ export class UsersService {
     return userWithEntityManager
   }
 
- 
+  async findUserRoleByUserId(id:any){
+    const user = await this.userRepository.findOne(id)
+
+    if(!user){
+      throw new HttpException('No user foud  by id', HttpStatus.NOT_FOUND)
+    }
+
+    return user.roles
+
+  }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
