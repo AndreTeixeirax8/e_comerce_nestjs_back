@@ -26,7 +26,7 @@ export class ProductController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Roles(RolesEnum.Admin)
+  @Roles(RolesEnum.Admin,RolesEnum.Visitor)
   @Get()
   findAll() {
     return this.productService.findAll();
