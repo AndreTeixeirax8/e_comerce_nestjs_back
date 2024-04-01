@@ -4,6 +4,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { EntityManager, Repository } from 'typeorm';
+import * as jwt from 'jsonwebtoken'
+import * as bcrypt from 'bcrypt'
+import { jwtConstants } from 'src/auth/constants';
 
 @Injectable()
 export class UsersService {
@@ -59,4 +62,26 @@ export class UsersService {
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
+
+  async veridiedUser(token:any){
+    if(!token){
+       throw new HttpException('Não autorizado',HttpStatus.NOT_FOUND)
+    }
+
+    try{
+      
+      let decoded:any = jwt.verify(token,jwtConstants.secret)
+
+      if(!decoded){
+        throw new HttpException('não autorizado', HttpStatus.NOT_FOUND)
+      }
+       //PAREI EM 15:44
+      const user= await this.userRepository.findOneOrFail(decoded)
+
+    }catch(err){
+
+    }
+
+  }
+
 }
