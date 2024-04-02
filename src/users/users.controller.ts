@@ -32,4 +32,9 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
+  @Get('auth/:id')
+  verifiedUser(@Param('id')id:string){
+    return this.usersService.veridiedUser(id)
+  }
 }

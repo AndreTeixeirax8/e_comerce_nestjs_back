@@ -75,11 +75,23 @@ export class UsersService {
       if(!decoded){
         throw new HttpException('não autorizado', HttpStatus.NOT_FOUND)
       }
-       //PAREI EM 15:44
-      const user= await this.userRepository.findOneOrFail(decoded)
+    
+      const user= await this.userRepository.findOneOrFail(decoded.sub)
+        if(!user){
+          throw new HttpException('não user', HttpStatus.NOT_FOUND)
+        }
+
+        if(user){
+          if(user.roles && user.roles === 'admin'){
+            return JSON.stringify('Authorized')
+          }else{
+            throw new HttpException('Nao autorizado',HttpStatus.NOT_FOUND)
+          }
+        }
 
     }catch(err){
-
+        console.log('error',err)
+        return err
     }
 
   }
