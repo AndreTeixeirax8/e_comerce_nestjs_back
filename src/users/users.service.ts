@@ -65,7 +65,7 @@ export class UsersService {
 
   async veridiedUser(token:any){
     if(!token){
-       throw new HttpException('Não autorizado',HttpStatus.NOT_FOUND)
+       throw new HttpException('Not authorized',HttpStatus.NOT_FOUND)
     }
 
     try{
@@ -73,19 +73,19 @@ export class UsersService {
       let decoded:any = jwt.verify(token,jwtConstants.secret)
 
       if(!decoded){
-        throw new HttpException('não autorizado', HttpStatus.NOT_FOUND)
+        throw new HttpException('Not authorized', HttpStatus.NOT_FOUND)
       }
     
       const user= await this.userRepository.findOneOrFail(decoded.sub)
         if(!user){
-          throw new HttpException('não user', HttpStatus.NOT_FOUND)
+          throw new HttpException('No user', HttpStatus.NOT_FOUND)
         }
 
         if(user){
           if(user.roles && user.roles === 'admin'){
             return JSON.stringify('Authorized')
           }else{
-            throw new HttpException('Nao autorizado',HttpStatus.NOT_FOUND)
+            throw new HttpException('Not authorized',HttpStatus.NOT_FOUND)
           }
         }
 
