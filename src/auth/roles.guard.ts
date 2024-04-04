@@ -19,6 +19,33 @@ export class RolesGuard implements CanActivate{
             context.getClass()
         ])
 
+        const request:any =context.switchToHttp().getRequest();
+        const found = request.rawHeaders.findIndex(e => e.split('')[0] === 'Bearer')
+
+        if(!requiredRoles){
+            return true
+        }
+
+        let getToken:any
+
+        if(found){
+            getToken = request.rawHeaders[found].split('')[1]
+        }
+
+        let decoded = jwt.verify(getToken,jwtConstants.secret)
+        console.log('decoded roles.guard.ts',decoded)
+
+        let userResult:any
+
+        await this.userService.findUserRoleByUserId(decoded.sub).then(data =>{
+            if (data){
+               userResult =data  
+            }
+        })
+
+        return requiredRoles.some(role => role === userResult)
+
+        /*
         if(!requiredRoles){
             return true
         }
@@ -43,7 +70,7 @@ export class RolesGuard implements CanActivate{
        })
 
        return requiredRoles.some(role => role === userResult)
-
+        */
     }
 
 }

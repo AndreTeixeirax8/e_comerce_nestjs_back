@@ -37,6 +37,8 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
+  @Roles(RolesEnum.Admin)
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(id, updateProductDto);
