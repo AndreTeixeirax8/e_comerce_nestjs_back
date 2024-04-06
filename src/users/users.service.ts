@@ -5,7 +5,7 @@ import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { EntityManager, Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { jwtConstants } from 'src/auth/constants';
 
 @Injectable()
@@ -18,13 +18,22 @@ export class UsersService {
   ){}
 
   async create(createUserDto: CreateUserDto) {
-    const newUser = await this.userRepository.create({
-      ...createUserDto
+    let newUser: any ={}
+    const {password } = createUserDto
+    let salt  = await bcrypt.genSaltSync(10)
+    let hashPassword = await bcrypt.hashSync(password,salt)
+    console.log('hashPassword',hashPassword)
+
+    createUserDto.username && (newUser.username = createUserDto.username)
+    hashPassword && ( newUser.password =hashPassword)
+    createUserDto.roles && (newUser.roles = createUserDto.roles)
+
+    let newSaveUser =await this.userRepository.create({
+      ...newUser
     })
 
-    await this.userRepository.save(newUser)
-
-    return newUser
+    await this.userRepository.save(newSaveUser)
+    return newSaveUser
 
   }
 

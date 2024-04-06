@@ -44,6 +44,8 @@ export class ProductController {
     return this.productService.update(id, updateProductDto);
   }
 
+  @Roles(RolesEnum.Admin)
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productService.remove(id);
