@@ -34,7 +34,10 @@ export class UsersController {
   }
 
   @Get('auth/:id')
-  verifiedUser(@Param('id')id:string){
-    return this.usersService.veridiedUser(id)
+ async  verifiedUser(@Param('id')id:string){
+    const teste  = await this.usersService.veridiedUser(id) 
+    console.log(" retorno teste ")
+    console.log(teste)
+    return teste
   }
 }

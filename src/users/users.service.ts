@@ -73,36 +73,35 @@ export class UsersService {
   }
 
   async veridiedUser(token:any){
-    if(!token){
-       throw new HttpException('Not authorized',HttpStatus.NOT_FOUND)
+    
+    if (!token) {
+      throw new HttpException('Not authorized', HttpStatus.NOT_FOUND)
     }
 
-    try{
-      
-      let decoded:any = jwt.verify(token,jwtConstants.secret)
+    try {
+      let decoded: any = jwt.verify(token, jwtConstants.secret)
 
-      if(!decoded){
+      if(!decoded) {
         throw new HttpException('Not authorized', HttpStatus.NOT_FOUND)
       }
-    
-      const user= await this.userRepository.findOneOrFail(decoded.sub)
-        if(!user){
-          throw new HttpException('No user', HttpStatus.NOT_FOUND)
-        }
 
-        if(user){
-          if(user.roles && user.roles === 'admin'){
-            return JSON.stringify('Authorized')
-          }else{
-            throw new HttpException('Not authorized',HttpStatus.NOT_FOUND)
-          }
-        }
+      const user = await this.userRepository.findOneOrFail(decoded.sub)
 
-    }catch(err){
-        console.log('error',err)
-        return err
+      if (!user) {
+        throw new HttpException('No user', HttpStatus.NOT_FOUND)
+      }
+
+      if (user) {
+        if (user.roles && user.roles === 'admin') {
+          return JSON.stringify('Authorized')
+        } else {
+          throw new HttpException('Not authorized', HttpStatus.NOT_FOUND)
+        }
+      }
+    } catch (err) {
+      console.log('error', err)
+      return err
     }
-
   }
 
 }
