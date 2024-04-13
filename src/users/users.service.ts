@@ -73,19 +73,23 @@ export class UsersService {
   }
 
   async veridiedUser(token:any){
-    
+   
     if (!token) {
+     
       throw new HttpException('Not authorized', HttpStatus.NOT_FOUND)
     }
 
     try {
+     
       let decoded: any = jwt.verify(token, jwtConstants.secret)
 
       if(!decoded) {
         throw new HttpException('Not authorized', HttpStatus.NOT_FOUND)
       }
 
-      const user = await this.userRepository.findOneOrFail(decoded.sub)
+
+    const user = await this.userRepository.findOneOrFail({ where: { id: decoded.sub } });
+
 
       if (!user) {
         throw new HttpException('No user', HttpStatus.NOT_FOUND)

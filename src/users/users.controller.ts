@@ -18,7 +18,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')///PAREI EM 38 MINUTOS
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
@@ -35,9 +35,9 @@ export class UsersController {
 
   @Get('auth/:id')
  async  verifiedUser(@Param('id')id:string){
-    const teste  = await this.usersService.veridiedUser(id) 
-    console.log(" retorno teste ")
-    console.log(teste)
-    return teste
+     
+  return await this.usersService.veridiedUser(id) 
+    
+    
   }
 }
