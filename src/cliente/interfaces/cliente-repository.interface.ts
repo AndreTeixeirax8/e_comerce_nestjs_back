@@ -4,4 +4,6 @@ export abstract class IClienteRepository{
    abstract criaUmRegistro:(
         data: CriaClienteDto,
       )=> Promise<CriaClienteDto>
+ abstract  buscaTodos:()=> Promise<CriaClienteDto[]> 
+
 }
