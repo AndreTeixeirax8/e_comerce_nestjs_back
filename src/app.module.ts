@@ -9,6 +9,8 @@ import { UsersModule } from './users/users.module';
 import { UserEntity } from './users/entities/user.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
+import { ClienteEntity } from './cliente/entities';
+import { ClienteModule } from './cliente/cliente.module';
 
 @Module({
   imports: [
@@ -19,13 +21,14 @@ import { RolesGuard } from './auth/roles.guard';
       username: 'postgres',
       password: 'admin',
       database: 'e_comerce_nestjs_back',
-      entities: [ProductEntity,UserEntity],
+      entities: [ProductEntity,UserEntity,ClienteEntity],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
     }),
     ProductModule,
     AuthModule,
     UsersModule,
+    ClienteModule
   ],
   controllers: [AppController],
   providers: [AppService,
