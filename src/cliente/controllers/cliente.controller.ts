@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { CriaClienteDto } from "src/cliente/dtos";
-import { IClienteRepository } from "../interfaces";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { CriaClienteDto, EditaClienteDto } from "src/cliente/dtos";
+import { IClienteRepository } from "src/cliente/interfaces";
+import { UUIDDto } from 'src/common/dtos';
 
 @Controller('cliente')
 export class ClienteController{
@@ -19,5 +20,12 @@ export class ClienteController{
         return this.clienteRepository.buscaTodos()
     }
 
-    //CRIADO CONTROLLER , FALTA TESTAR E ADICIONAR O MODULO
+    @Put(':id')
+    editaUmRegistro(@Param() id: UUIDDto, @Body() data:EditaClienteDto){
+        data.id= id.id
+        return this.clienteRepository.editaUmRegistro(data)
+    }
+
+    //ADICIONADO O EDIT FALTA FAZER OS TRATAMENTOS DE ERRO
+ 
 }

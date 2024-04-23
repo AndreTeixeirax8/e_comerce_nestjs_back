@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CriaClienteDto{
     
     @IsNotEmpty()
-    @IsString()
+    @IsUUID()
     nome:string;
 
     @IsOptional()
