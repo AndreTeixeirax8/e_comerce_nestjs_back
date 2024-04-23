@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ClienteEntity } from "./entities";
-import { ClienteController } from "./controllers";
-import { IClienteRepository } from "./interfaces";
-import { ClienteRepository } from "./repositories";
+import { ClienteEntity } from "src/cliente/entities";
+import { ClienteController } from "src/cliente/controllers";
+import { IClienteRepository } from "src/cliente/interfaces";
+import { ClienteRepository } from "src/cliente/repositories";
 
 @Module({
     imports:[TypeOrmModule.forFeature([ClienteEntity])],
