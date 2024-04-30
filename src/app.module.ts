@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductModule } from './product/product.module';
+import { ProductModule } from 'src/product';
 import { ProductEntity } from './product/entities/product.entity';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -11,6 +11,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
 import { ClienteEntity } from 'src/cliente/entities';
 import { ClienteModule } from 'src/cliente';
+import { AtendimentoModule } from 'src/atendimento';
+import { AtendimentoEntity } from 'src/atendimento/entities';
 
 @Module({
   imports: [
@@ -21,14 +23,20 @@ import { ClienteModule } from 'src/cliente';
       username: 'postgres',
       password: 'admin',
       database: 'e_comerce_nestjs_back',
-      entities: [ProductEntity,UserEntity,ClienteEntity],
+      entities: [
+        ProductEntity,
+        UserEntity,
+        ClienteEntity,
+        AtendimentoEntity
+      ],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
     }),
     ProductModule,
     AuthModule,
     UsersModule,
-    ClienteModule
+    ClienteModule,
+    AtendimentoModule
   ],
   controllers: [AppController],
   providers: [AppService,

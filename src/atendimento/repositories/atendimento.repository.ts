@@ -3,10 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { AtendimentoEntity } from "src/atendimento/entities";
 import { Repository } from "typeorm";
 import { EditaAtendimentoDto,CriaAtendimentoDto } from "src/atendimento/dtos";
-import { IAtendimetoRepository } from "src/atendimento/interfaces";
+import { IAtendimentoRepository } from "src/atendimento/interfaces";
 
 @Injectable()
-export class AtendimentoRepository implements IAtendimetoRepository{
+export class AtendimentoRepository implements IAtendimentoRepository{
     constructor(
         @InjectRepository(AtendimentoEntity)
         private atendimentoRepository: Repository<AtendimentoEntity>,
