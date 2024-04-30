@@ -9,8 +9,8 @@ import { UsersModule } from './users/users.module';
 import { UserEntity } from './users/entities/user.entity';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
-import { ClienteEntity } from './cliente/entities';
-import { ClienteModule } from './cliente/cliente.module';
+import { ClienteEntity } from 'src/cliente/entities';
+import { ClienteModule } from 'src/cliente';
 
 @Module({
   imports: [
