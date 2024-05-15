@@ -8,5 +8,6 @@ export abstract class IClienteRepository{
  abstract editaUmRegistro:(
      data: EditaClienteDto,
    )=> Promise<EditaClienteDto>
+   abstract buscaUmPorId:(id:string)=> Promise<CriaClienteDto> 
 
 }

@@ -4,6 +4,8 @@ import { ClienteEntity } from "src/cliente/entities";
 import {  Repository } from "typeorm";
 import { CriaClienteDto, EditaClienteDto } from "src/cliente/dtos";
 import { IClienteRepository } from "src/cliente/interfaces";
+import { UUID } from "crypto";
+import { UUIDDto } from "src/common/dtos";
 
 @Injectable()
 export class ClienteRepository implements IClienteRepository{
@@ -27,6 +29,12 @@ export class ClienteRepository implements IClienteRepository{
       ): Promise<EditaClienteDto> {
         return this.clienteRepository.save(data);
       }
+
+      buscaUmPorId(id:string): Promise<CriaClienteDto> {
+        return this.clienteRepository.findOneBy({id});
+      }
+
+      
 
     
 }

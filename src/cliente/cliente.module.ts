@@ -5,6 +5,7 @@ import { ClienteController } from "src/cliente/controllers";
 import { IClienteRepository } from "src/cliente/interfaces";
 import { ClienteRepository } from "src/cliente/repositories";
 
+
 @Module({
     imports:[TypeOrmModule.forFeature([ClienteEntity])],
     controllers: [ClienteController],
@@ -12,7 +13,11 @@ import { ClienteRepository } from "src/cliente/repositories";
       {
         provide:IClienteRepository,
         useClass:ClienteRepository
-      }],
+      },
+     
+    ],
+
+
     exports:[IClienteRepository]
   })
   export class ClienteModule {}
