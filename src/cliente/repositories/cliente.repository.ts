@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import {  InjectRepository } from "@nestjs/typeorm";
 import { ClienteEntity } from "src/cliente/entities";
-import {  Repository } from "typeorm";
+import {  Repository,ILike } from "typeorm";
 import { CriaClienteDto, EditaClienteDto } from "src/cliente/dtos";
 import { IClienteRepository } from "src/cliente/interfaces";
 import { UUID } from "crypto";
@@ -34,7 +34,13 @@ export class ClienteRepository implements IClienteRepository{
         return this.clienteRepository.findOneBy({id});
       }
 
-      
+      async buscaPorNomeParcial(parteDoNome: string): Promise<ClienteEntity[]> {
+        return await this.clienteRepository.find({
+          where: {
+            nome: ILike(`%${parteDoNome}%`)  // Use ILike para buscas case-insensitive no PostgreSQL
+          }
+        });
+      }
 
     
 }

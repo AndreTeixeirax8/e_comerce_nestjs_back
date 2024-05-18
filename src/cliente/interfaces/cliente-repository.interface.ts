@@ -1,4 +1,5 @@
 import { CriaClienteDto, EditaClienteDto } from "src/cliente/dtos";
+import { ClienteEntity } from "../entities";
 
 export abstract class IClienteRepository{
    abstract criaUmRegistro:(
@@ -9,5 +10,6 @@ export abstract class IClienteRepository{
      data: EditaClienteDto,
    )=> Promise<EditaClienteDto>
    abstract buscaUmPorId:(id:string)=> Promise<CriaClienteDto> 
+   abstract buscaPorNomeParcial:(parteDoNome: string)=> Promise<ClienteEntity[]> 
 
 }
