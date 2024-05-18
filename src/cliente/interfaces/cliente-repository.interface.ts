@@ -1,5 +1,5 @@
 import { CriaClienteDto, EditaClienteDto } from "src/cliente/dtos";
-import { ClienteEntity } from "../entities";
+import { ClienteEntity } from "src/cliente/entities";
 
 export abstract class IClienteRepository{
    abstract criaUmRegistro:(

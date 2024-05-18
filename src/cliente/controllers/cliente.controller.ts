@@ -2,11 +2,10 @@ import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from "@nest
 import { JwtAuthGuard } from "src/auth/jwt-auth.guards";
 import { RolesEnum } from "src/auth/role.enum";
 import { Roles } from "src/auth/roles.decorator";
-import { RolesGuard } from "src/auth/roles.guard";
 import { CriaClienteDto, EditaClienteDto } from "src/cliente/dtos";
 import { IClienteRepository } from "src/cliente/interfaces";
 import { UUIDDto } from 'src/common/dtos';
-import { ClienteEntity } from "../entities";
+import { ClienteEntity } from "src/cliente/entities";
 
 
 @UseGuards(JwtAuthGuard)
@@ -16,7 +15,6 @@ export class ClienteController{
     constructor(
         private readonly clienteRepository:IClienteRepository
     ){}
-
 
     @Post()
     criaUmRegistro(@Body() data:CriaClienteDto){
