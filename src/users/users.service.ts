@@ -54,8 +54,7 @@ export class UsersService {
   }
 
   async findUserRoleByUserId(id:any){
-    const user = await this.userRepository.findOne(id)
-
+    const user = await this.userRepository.findOne({ where: { id: id } })
     if(!user){
       throw new HttpException('No user foud  by id', HttpStatus.NOT_FOUND)
     }

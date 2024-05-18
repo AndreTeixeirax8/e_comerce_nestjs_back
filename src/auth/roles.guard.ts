@@ -14,27 +14,36 @@ export class RolesGuard implements CanActivate{
         ){}
 
    async canActivate(context: ExecutionContext)  {
+
         const requiredRoles = this.reflector.getAllAndOverride(ROLES_KEY,[
             context.getHandler(),
             context.getClass()
         ])
+      
 
         const request:any =context.switchToHttp().getRequest();
-        const found = request.rawHeaders.findIndex(e => e.split('')[0] === 'Bearer')
+        
+   
+     
+        const teste = context.switchToHttp().getRequest();
+            const rawHeaders = teste.rawHeaders;
+            let token = '';
+
+            for (let i = 0; i < rawHeaders.length; i += 2) {
+            if (rawHeaders[i] === 'Authorization') {
+                token = rawHeaders[i + 1].replace('Bearer ', '');
+                break;
+            }
+            }
+
+        
 
         if(!requiredRoles){
             return true
         }
 
-        let getToken:any
-
-        if(found){
-            getToken = request.rawHeaders[found].split('')[1]
-        }
-
-        let decoded = jwt.verify(getToken,jwtConstants.secret)
-        console.log('decoded roles.guard.ts',decoded)
-
+        let decoded = jwt.verify(token,jwtConstants.secret)
+       
         let userResult:any
 
         await this.userService.findUserRoleByUserId(decoded.sub).then(data =>{

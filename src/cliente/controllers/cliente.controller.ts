@@ -31,8 +31,8 @@ export class ClienteController{
         return this.clienteRepository.editaUmRegistro(data)
     }
 
-    //@Roles(RolesEnum.Admin)
-    //@UseGuards(JwtAuthGuard,RolesGuard)
+    @UseGuards(JwtAuthGuard)
+    @Roles(RolesEnum.Admin)
     @Get(':id')
     buscaUmPorId(@Param('id') id: string) {
         console.log("chegou na controller com o id")
