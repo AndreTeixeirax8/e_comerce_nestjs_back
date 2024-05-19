@@ -1,0 +1,1 @@
+export * from './origem-atendimento-repository.interface'
