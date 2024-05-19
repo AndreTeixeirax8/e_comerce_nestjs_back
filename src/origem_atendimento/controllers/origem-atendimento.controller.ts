@@ -6,8 +6,8 @@ import { UUIDDto } from "src/common/dtos";
 
 @UseGuards(JwtAuthGuard)
 @Roles(RolesEnum.Admin)
-@Controller('origem_atendimento')
-export class ClienteController{
+@Controller('origem-atendimento')
+export class OrigemAtendimentoController{
     constructor(
         private readonly origemAtendimentoRepository:IOrigemAtendimentoRepository
     ){}

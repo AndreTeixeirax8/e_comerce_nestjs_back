@@ -13,6 +13,8 @@ import { ClienteEntity } from 'src/cliente/entities';
 import { ClienteModule } from 'src/cliente';
 import { AtendimentoModule } from 'src/atendimento';
 import { AtendimentoEntity } from 'src/atendimento/entities';
+import { OrigemAtendimentoEntity } from './origem_atendimento/entities';
+import { OrigemAtendimentoModule } from './origem_atendimento';
 
 @Module({
   imports: [
@@ -27,7 +29,8 @@ import { AtendimentoEntity } from 'src/atendimento/entities';
         ProductEntity,
         UserEntity,
         ClienteEntity,
-        AtendimentoEntity
+        AtendimentoEntity,
+        OrigemAtendimentoEntity
       ],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
@@ -36,7 +39,8 @@ import { AtendimentoEntity } from 'src/atendimento/entities';
     AuthModule,
     UsersModule,
     ClienteModule,
-    AtendimentoModule
+    AtendimentoModule,
+    OrigemAtendimentoModule,
   ],
   controllers: [AppController],
   providers: [AppService,
