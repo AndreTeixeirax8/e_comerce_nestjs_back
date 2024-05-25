@@ -5,16 +5,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from 'src/product';
 import { ProductEntity } from './product/entities/product.entity';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { UserEntity } from './users/entities/user.entity';
+import { UsersModule } from 'src/users';
+import { UserEntity } from 'src/users/entities';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
 import { ClienteEntity } from 'src/cliente/entities';
 import { ClienteModule } from 'src/cliente';
 import { AtendimentoModule } from 'src/atendimento';
 import { AtendimentoEntity } from 'src/atendimento/entities';
-import { OrigemAtendimentoEntity } from './origem_atendimento/entities';
-import { OrigemAtendimentoModule } from './origem_atendimento';
+import { OrigemAtendimentoEntity } from 'src/origem_atendimento/entities';
+import { OrigemAtendimentoModule } from 'src/origem_atendimento';
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import { OrigemAtendimentoModule } from './origem_atendimento';
         UserEntity,
         ClienteEntity,
         AtendimentoEntity,
-        OrigemAtendimentoEntity
+        OrigemAtendimentoEntity,
       ],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
@@ -43,10 +43,12 @@ import { OrigemAtendimentoModule } from './origem_atendimento';
     OrigemAtendimentoModule,
   ],
   controllers: [AppController],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
-    provide:APP_GUARD,
-    useClass:RolesGuard
-  }],
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

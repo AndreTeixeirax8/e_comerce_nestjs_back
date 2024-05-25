@@ -1,1 +1,1 @@
-export * from './origem_atendimento.entity'
+export * from './origem-atendimento.entity';
