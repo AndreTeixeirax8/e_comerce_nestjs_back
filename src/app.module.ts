@@ -3,18 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from 'src/product';
-import { ProductEntity } from './product/entities/product.entity';
-import { AuthModule } from './auth/auth.module';
+import { ProductEntity } from 'src/product/entities';
 import { UsersModule } from 'src/users';
 import { UserEntity } from 'src/users/entities';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './auth/roles.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthModule } from 'src/auth/auth.module';
 import { ClienteEntity } from 'src/cliente/entities';
 import { ClienteModule } from 'src/cliente';
 import { AtendimentoModule } from 'src/atendimento';
 import { AtendimentoEntity } from 'src/atendimento/entities';
 import { OrigemAtendimentoEntity } from 'src/origem_atendimento/entities';
 import { OrigemAtendimentoModule } from 'src/origem_atendimento';
+import { TipoServicoEntity } from 'src/tipo_servico/entities';
+import { TipoServicoModule } from 'src/tipo_servico/tipo-servico.module';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { OrigemAtendimentoModule } from 'src/origem_atendimento';
         ClienteEntity,
         AtendimentoEntity,
         OrigemAtendimentoEntity,
+        TipoServicoEntity,
       ],
       synchronize: true, // não deixar funcionando em produção
       logging: true,
@@ -41,6 +44,7 @@ import { OrigemAtendimentoModule } from 'src/origem_atendimento';
     ClienteModule,
     AtendimentoModule,
     OrigemAtendimentoModule,
+    TipoServicoModule,
   ],
   controllers: [AppController],
   providers: [
