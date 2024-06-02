@@ -1,4 +1,6 @@
+import { ClienteEntity } from 'src/cliente/entities';
 import { OrigemAtendimentoEntity } from 'src/origem_atendimento/entities';
+import { TipoServicoEntity } from 'src/tipo_servico/entities';
 import {
   Column,
   Entity,
@@ -33,4 +35,12 @@ export class AtendimentoEntity {
   @ManyToOne(() => OrigemAtendimentoEntity)
   @JoinColumn([{ name: 'atendimento_via', referencedColumnName: 'id' }])
   origem_atendimento: OrigemAtendimentoEntity;
+
+  @ManyToOne(() => TipoServicoEntity)
+  @JoinColumn([{ name: 'tipo_servico', referencedColumnName: 'id' }])
+  tipo_servico_entity: TipoServicoEntity;
+
+  @ManyToOne(() => ClienteEntity)
+  @JoinColumn([{ name: 'cliente', referencedColumnName: 'id' }])
+  cliente_entity: ClienteEntity;
 }

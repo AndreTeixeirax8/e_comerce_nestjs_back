@@ -35,16 +35,18 @@ export class AtendimentoRepository implements IAtendimentoRepository {
   buscaPaginada(query: PaginateQuery): Promise<Paginated<AtendimentoEntity>> {
     const queryBuilder = this.atendimentoRepository
       .createQueryBuilder('atendimento')
+      .leftJoinAndSelect('atendimento.origem_atendimento', 'origem_atendimento')
       .leftJoinAndSelect(
-        'atendimento.origem_atendimento',
-        'origem_atendimento',
-      );
+        'atendimento.tipo_servico_entity',
+        'tipo_servico_entity',
+      )
+      .leftJoinAndSelect('atendimento.cliente_entity', 'cliente_entity');
     return paginate(query, queryBuilder, {
       sortableColumns: ['cliente'],
-      relations: ['origem_atendimento'],
+      //relations: ['origem_atendimento'],
       nullSort: 'last',
       searchableColumns: ['cliente'],
-      defaultSortBy: [['cliente', 'ASC']],
+      defaultSortBy: [['dataCriacao', 'ASC']],
       defaultLimit: 10,
       filterableColumns: {
         arquivado: [FilterOperator.EQ],
