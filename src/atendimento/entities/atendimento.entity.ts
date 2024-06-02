@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { OrigemAtendimentoEntity } from 'src/origem_atendimento/entities';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('atendimento')
 export class AtendimentoEntity {
@@ -22,4 +29,8 @@ export class AtendimentoEntity {
 
   @Column({ type: 'varchar', length: 35, nullable: true })
   status: string;
+
+  @ManyToOne(() => OrigemAtendimentoEntity)
+  @JoinColumn([{ name: 'atendimento_via', referencedColumnName: 'id' }])
+  origem_atendimento: OrigemAtendimentoEntity;
 }

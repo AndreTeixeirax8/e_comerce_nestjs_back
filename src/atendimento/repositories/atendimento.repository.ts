@@ -5,6 +5,12 @@ import { Repository } from 'typeorm';
 import { EditaAtendimentoDto, CriaAtendimentoDto } from 'src/atendimento/dtos';
 import { IAtendimentoRepository } from 'src/atendimento/interfaces';
 import { StatusEnum } from 'src/atendimento/enums';
+import {
+  FilterOperator,
+  paginate,
+  Paginated,
+  PaginateQuery,
+} from 'nestjs-paginate';
 
 @Injectable()
 export class AtendimentoRepository implements IAtendimentoRepository {
@@ -24,5 +30,25 @@ export class AtendimentoRepository implements IAtendimentoRepository {
 
   editaUmRegistro(data: EditaAtendimentoDto): Promise<EditaAtendimentoDto> {
     return this.atendimentoRepository.save(data);
+  }
+
+  buscaPaginada(query: PaginateQuery): Promise<Paginated<AtendimentoEntity>> {
+    const queryBuilder = this.atendimentoRepository
+      .createQueryBuilder('atendimento')
+      .leftJoinAndSelect(
+        'atendimento.origem_atendimento',
+        'origem_atendimento',
+      );
+    return paginate(query, queryBuilder, {
+      sortableColumns: ['cliente'],
+      relations: ['origem_atendimento'],
+      nullSort: 'last',
+      searchableColumns: ['cliente'],
+      defaultSortBy: [['cliente', 'ASC']],
+      defaultLimit: 10,
+      filterableColumns: {
+        arquivado: [FilterOperator.EQ],
+      },
+    });
   }
 }
