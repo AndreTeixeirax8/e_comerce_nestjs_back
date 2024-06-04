@@ -40,14 +40,14 @@ export class AtendimentoRepository implements IAtendimentoRepository {
         'atendimento.tipo_servico_entity',
         'tipo_servico_entity',
       )
-      .leftJoinAndSelect('atendimento.cliente_entity', 'cliente_entity');
+      .leftJoinAndSelect('atendimento.cliente_entity', 'cliente_entity')
+      .where('atendimento.status != :status', { status: 'solucionado' });
     return paginate(query, queryBuilder, {
       sortableColumns: ['cliente'],
-      //relations: ['origem_atendimento'],
       nullSort: 'last',
       searchableColumns: ['cliente'],
       defaultSortBy: [['dataCriacao', 'ASC']],
-      defaultLimit: 10,
+      defaultLimit: 5,
       filterableColumns: {
         arquivado: [FilterOperator.EQ],
       },
