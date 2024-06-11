@@ -54,6 +54,7 @@ export class AtendimentoRepository implements IAtendimentoRepository {
     });
   }
 
+  /*
   async buscaTotais(): Promise<{
     totalAbertos: number;
     totalSolucionados: number;
@@ -80,6 +81,73 @@ export class AtendimentoRepository implements IAtendimentoRepository {
       totalAbertos,
       totalSolucionados,
       maisAntigo,
+    };
+  }*/
+
+  async buscaTotais(): Promise<{
+    totalAbertos: number;
+    totalSolucionados: number;
+    maisAntigo: Date | null;
+    totalPorTipoServico: { [key: string]: number };
+    totalPorOrigemAtendimento: { [key: string]: number };
+  }> {
+    const queryBuilder = this.atendimentoRepository
+      .createQueryBuilder('atendimento')
+      .leftJoinAndSelect('atendimento.origem_atendimento', 'origem_atendimento')
+      .leftJoinAndSelect(
+        'atendimento.tipo_servico_entity',
+        'tipo_servico_entity',
+      );
+
+    const [
+      totalAbertos,
+      totalSolucionados,
+      totalPorTipoServico,
+      totalPorOrigemAtendimento,
+    ] = await Promise.all([
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'aberto' })
+        .getCount(),
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'solucionado' })
+        .getCount(),
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'aberto' })
+        .groupBy('tipo_servico_entity.nome_servico')
+        .select('tipo_servico_entity.nome_servico, COUNT(*) AS total')
+        .getRawMany()
+        .then((result) =>
+          result.reduce((acc, curr) => {
+            acc[curr.nome_servico] = curr.total;
+            return acc;
+          }, {}),
+        ),
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'aberto' })
+        .groupBy('origem_atendimento.nome_antendimento')
+        .select('origem_atendimento.nome_antendimento, COUNT(*) AS total')
+        .getRawMany()
+        .then((result) =>
+          result.reduce((acc, curr) => {
+            acc[curr.nome_antendimento] = curr.total;
+            return acc;
+          }, {}),
+        ),
+    ]);
+
+    const maisAntigo = await this.atendimentoRepository
+      .createQueryBuilder('atendimento')
+      .where('atendimento.status = :status', { status: 'aberto' })
+      .orderBy('atendimento.dataCriacao', 'ASC')
+      .getOne()
+      .then((atendimento) => (atendimento ? atendimento.dataCriacao : null));
+
+    return {
+      totalAbertos,
+      totalSolucionados,
+      maisAntigo,
+      totalPorTipoServico,
+      totalPorOrigemAtendimento,
     };
   }
 }

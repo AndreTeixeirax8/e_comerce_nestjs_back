@@ -16,6 +16,8 @@ export abstract class IAtendimentoRepository {
   abstract buscaTotais: () => Promise<{
     totalAbertos: number;
     totalSolucionados: number;
-    maisAntigo: Date;
+    maisAntigo: Date | null;
+    totalPorTipoServico: { [key: string]: number };
+    totalPorOrigemAtendimento: { [key: string]: number };
   }>;
 }
