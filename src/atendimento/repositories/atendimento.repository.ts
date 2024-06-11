@@ -53,4 +53,33 @@ export class AtendimentoRepository implements IAtendimentoRepository {
       },
     });
   }
+
+  async buscaTotais(): Promise<{
+    totalAbertos: number;
+    totalSolucionados: number;
+    maisAntigo: Date;
+  }> {
+    const queryBuilder =
+      this.atendimentoRepository.createQueryBuilder('atendimento');
+
+    const [totalAbertos, totalSolucionados, maisAntigo] = await Promise.all([
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'aberto' })
+        .getCount(),
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'solucionado' })
+        .getCount(),
+      queryBuilder
+        .where('atendimento.status = :status', { status: 'aberto' })
+        .orderBy('atendimento.dataCriacao', 'ASC')
+        .getOne()
+        .then((atendimento) => (atendimento ? atendimento.dataCriacao : null)),
+    ]);
+
+    return {
+      totalAbertos,
+      totalSolucionados,
+      maisAntigo,
+    };
+  }
 }

@@ -13,4 +13,9 @@ export abstract class IAtendimentoRepository {
   abstract buscaPaginada: (
     query: PaginateQuery,
   ) => Promise<Paginated<AtendimentoEntity>>;
+  abstract buscaTotais: () => Promise<{
+    totalAbertos: number;
+    totalSolucionados: number;
+    maisAntigo: Date;
+  }>;
 }

@@ -22,6 +22,7 @@ export class AtendimentoController {
   @Put(':id')
   editaUmRegistro(@Param() id: UUIDDto, @Body() data: EditaAtendimentoDto) {
     data.id = id.id;
+
     return this.atendimentoRepository.editaUmRegistro(data);
   }
 
@@ -30,5 +31,11 @@ export class AtendimentoController {
     @Query() query: PaginateQuery,
   ): Promise<Paginated<AtendimentoEntity>> {
     return this.atendimentoRepository.buscaPaginada(query);
+  }
+
+  @Get('total')
+  buscaTotais() {
+    console.log('chegou aqui');
+    return this.atendimentoRepository.buscaTotais();
   }
 }
