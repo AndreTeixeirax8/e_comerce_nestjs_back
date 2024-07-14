@@ -6,7 +6,7 @@
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["src/**/*.ts"],
-        "maxLambdaSize": "15mb"
+        "buildCommand": "npm run build"
       }
     }
   ],

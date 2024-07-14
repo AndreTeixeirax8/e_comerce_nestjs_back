@@ -22,10 +22,6 @@
 
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "src/*": ["src/*"]
-    },
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -34,7 +30,11 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "incremental": true
+    "baseUrl": "./",
+    "incremental": true,
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
   "exclude": ["node_modules", "dist"]
 }
