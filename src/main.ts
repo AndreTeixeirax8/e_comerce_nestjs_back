@@ -13,28 +13,23 @@ bootstrap();*/
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import serverlessExpress from '@vendia/serverless-express';
-import { Callback, Context, Handler } from 'aws-lambda';
 
-let server: Handler;
-
-async function bootstrap(): Promise<Handler> {
+async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   await app.init();
 
-  const expressApp = app.getHttpAdapter().getInstance();
-  return serverlessExpress({ app: expressApp });
+  return app.getHttpAdapter().getInstance();
 }
 
-export const handler: Handler = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
-  server = server ?? (await bootstrap());
-  return server(event, context, callback);
-};
+let app;
+
+export default async function handler(req, res) {
+  if (!app) {
+    app = await bootstrap();
+  }
+  app(req, res);
+}
 
 // Esta linha não é necessária em um ambiente serverless
 // bootstrap();*/
