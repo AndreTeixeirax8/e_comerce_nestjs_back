@@ -1,4 +1,5 @@
-/*{ funcionanado até o dia 14/07/2024
+//funcionanado até o dia 14/07/2024
+{
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -18,23 +19,4 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   }
-}*/
-
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2017",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "paths": {
-      "src/*": ["src/*"]
-    }
-  },
-  "exclude": ["node_modules", "dist"]
 }
