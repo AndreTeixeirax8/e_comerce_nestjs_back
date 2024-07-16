@@ -5,7 +5,17 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  //app.enableCors();
+  //teste de cors
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'ecomercenestjsback-production.up.railway.app',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  });
   await app.listen(3000);
   console.log('Servidor rodado na porta 3000');
 }
