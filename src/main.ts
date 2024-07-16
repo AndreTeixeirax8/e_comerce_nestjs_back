@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'ecomercenestjsback-production.up.railway.app',
+      'https://ecomercenestjsback-production.up.railway.app',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
