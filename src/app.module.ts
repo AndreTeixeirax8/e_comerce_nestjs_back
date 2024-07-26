@@ -19,6 +19,7 @@ import { AtendimentoModule } from './atendimento';
 import { OrigemAtendimentoModule } from './origem_atendimento';
 import { TipoServicoModule } from './tipo_servico';
 import { RolesGuard } from './auth';
+import { DataBaseConfig } from './database.config';
 
 @Module({
   imports: [
@@ -28,14 +29,15 @@ import { RolesGuard } from './auth';
         rejectUnauthorized: false,
       },
       //host: 'localhost',
-      host: 'ep-sweet-resonance-a4a01kcf.us-east-1.aws.neon.tech',
-      port: 5432,
+      host: `${DataBaseConfig.DB_HOST}`,
+      port: Number(DataBaseConfig.DB_PORT), // Converte para número
+      //port: 5432,
       // username: 'postgres',
-      username: 'default',
+      username: `${DataBaseConfig.DB_USERNAME}`, // Converte para string
+      password: `${DataBaseConfig.DB_PASSWORD}`, // Converte para string
+      database: `${DataBaseConfig.DB_DATABASE}`, // Converte para string
       // password: 'admin',
-      password: 'FPi3E5XJCQsy',
       //database: 'e_comerce_nestjs_back',
-      database: 'verceldb',
       entities: [
         ProductEntity,
         UserEntity,

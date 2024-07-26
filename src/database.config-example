@@ -1,0 +1,8 @@
+/*export enum DataBaseConfig {
+  DB_HOST = 'abcd',
+  DB_PORT = 5432,
+  DB_USERNAME = 'abcd',
+  DB_PASSWORD = 'abcd',
+  DB_DATABASE = 'abcd',
+  DB_SSL = 'false',
+}*/
