@@ -19,7 +19,7 @@ import { AtendimentoModule } from './atendimento';
 import { OrigemAtendimentoModule } from './origem_atendimento';
 import { TipoServicoModule } from './tipo_servico';
 import { RolesGuard } from './auth';
-import { DataBaseConfig } from './database.config';
+import { DataBaseConfig } from 'src/database.config';
 
 @Module({
   imports: [
