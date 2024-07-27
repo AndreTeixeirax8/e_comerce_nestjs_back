@@ -11,6 +11,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'https://ecomercenestjsback-production.up.railway.app',
+      'https://e-comerce-nestjs-back-1ixiutgww-andreteixeirax8s-projects.vercel.app',
       'https://e-comerce-angular-front.vercel.app',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
