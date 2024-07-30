@@ -28,16 +28,12 @@ import { RolesGuard } from './auth';
       ssl: {
         rejectUnauthorized: false,
       },
-      //host: 'localhost',
-      host: 'ep-sweet-resonance-a4a01kcf.us-east-1.aws.neon.tech', // `${DataBaseConfig.DB_HOST}`,
+      host: 'localhost',
       port: 5432,
       //port: 5432,
-      // username: 'postgres',
-      username: 'default', //`${DataBaseConfig.DB_USERNAME}`, // Converte para string
-      password: 'FPi3E5XJCQsy', // `${DataBaseConfig.DB_PASSWORD}`, // Converte para string
-      database: 'verceldb', // `${DataBaseConfig.DB_DATABASE}`, // Converte para string
-      // password: 'admin',
-      //database: 'e_comerce_nestjs_back',
+      username: 'postgres',
+      password: 'admin',
+      database: 'e_comerce_nestjs_back',
       entities: [
         ProductEntity,
         UserEntity,
